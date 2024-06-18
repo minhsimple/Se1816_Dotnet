@@ -1,0 +1,67 @@
+﻿<Window x:Class="LoadDB.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LoadDB"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Grid.Column="0" x:Name="lvDisplay" SelectionChanged="lvDisplay_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="MSSV" Width="40" DisplayMemberBinding="{Binding Id, Mode=OneWay}"/>
+                    <GridViewColumn Header="FullName" Width="150" DisplayMemberBinding="{Binding Name, Mode=OneWay}"/>
+                    <GridViewColumn Header="Gender" Width="50" DisplayMemberBinding="{Binding Gender, Mode=OneWay}"/>
+                    <GridViewColumn Header="DepartName" Width="130" DisplayMemberBinding="{Binding Depart.Name, Mode=OneWay}"/>
+                    <GridViewColumn Header="DOB" Width="80" DisplayMemberBinding="{Binding Dob, Mode=OneWay}"/>
+                    <GridViewColumn Header="GPA" Width="80" DisplayMemberBinding="{Binding Gpa, Mode=OneWay}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Column="1">
+            <Button Name="btnLoad" Width="50" Margin="3" Content="LoadDB" Click="btnLoad_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="ID" Margin="5" Width="45"/>
+                <TextBox Margin="5" Width="200" Name="txtId" Text="{Binding ElementName=lvDisplay, Path=SelectedItem.Id, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Name" Margin="5" Width="45"/>
+                <TextBox Margin="5" Name="txtName" Width="200" Text="{Binding ElementName=lvDisplay, Path=SelectedItem.Name, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Gender" Margin="5" Width="45"/>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <RadioButton Name="rbMale" Content="Male" IsChecked="True"/>
+                    <RadioButton Name="rbFemale" Content="Female" Margin="10,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Depart" Margin="5" Width="45"/>
+                <StackPanel Name="spDepart" Tag="{Binding ElementName=lvDisplay, Path=SelectedItem.Depart.Id, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Dob" Margin="5" Width="45"/>
+                <DatePicker Margin="5" Name="dpDob" Width="200" Text="{Binding ElementName=lvDisplay, Path=SelectedItem.Dob, Mode=OneWay}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="GPA" Margin="5" Width="45"/>
+                <TextBox Margin="5" Name="txtGPA" Width="200" Text="{Binding ElementName=lvDisplay, Path=SelectedItem.Gpa, Mode=OneWay}"/>
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Width="50" Content="Insert" Name="btnInsert" Click="btnInsert_Click"/>
+                <Button Width="50" Content="Update" Grid.Column="1" Name="btnUpdate" Click="btnUpdate_Click"/>
+                <Button Width="50" Content="Delete" Grid.Column="2" Name="btnDelete" Click="btnDelete_Click"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>
